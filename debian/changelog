@@ -1,0 +1,8 @@
+ros-rolling-generate-parameter-library (0.1.0-2bullseye) bullseye; urgency=high
+
+  * CMake to generate ROS parameter library.
+  * Contributors: Paul Gesel, Tyler Weaver
+
+ -- Paul Gesel <paul.gesel@picknik.ai>  Wed, 27 Jul 2022 06:00:00 -0000
+
+
