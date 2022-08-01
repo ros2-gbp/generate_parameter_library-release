@@ -26,6 +26,12 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#pragma once
+
+#include <parameter_traits/parameter_traits.hpp>
+
+namespace parameter_traits {
+
 // User defined parameter validation
 Result validate_double_array_custom_func(const rclcpp::Parameter& parameter,
                                          double max_sum, double max_element) {
@@ -51,3 +57,5 @@ Result validate_double_array_custom_func(const rclcpp::Parameter& parameter,
 }
 
 Result no_args_validator(const rclcpp::Parameter& parameter) { return OK; }
+
+}  // namespace parameter_traits
