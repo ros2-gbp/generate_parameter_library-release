@@ -139,16 +139,21 @@ A parameter is a YAML dictionary with the only required key being `type`.
 
 The types of parameters in ros2 map to C++ types.
 
-| Parameter Type | C++ Type                   |
-|----------------|----------------------------|
-| string         | `std::string`              |
-| double         | `double`                   |
-| int            | `int`                      |
-| bool           | `bool`                     |
-| string_array   | `std::vector<std::string>` |
-| double_array   | `std::vector<double>`      |
-| int_array      | `std::vector<int>`         |
-| bool_array     | `std::vector<bool>`        |
+| Parameter Type  | C++ Type                    |
+|-----------------|-----------------------------|
+| string          | `std::string`               |
+| double          | `double`                    |
+| int             | `int`                       |
+| bool            | `bool`                      |
+| string_array    | `std::vector<std::string>`  |
+| double_array    | `std::vector<double>`       |
+| int_array       | `std::vector<int>`          |
+| bool_array      | `std::vector<bool>`         |
+| string_fixed_XX | `FixedSizeString<XX>`       |
+
+Fixed size types are denoted with a suffix `_fixed_XX`, where `XX` is the desired size.
+The corresponding C++ type is a data wrapper class for conveniently accessing the data.
+Note that any fixed size type will automatically use a `size_lt` validator. Validators are explained in the next section.
 
 ### Built-In Validators
 Validators are C++ functions that take arguments represented by a key-value pair in yaml.
@@ -183,9 +188,10 @@ The built-in validator functions provided by this package are:
 |------------------------|---------------------|-----------------------------------------------------------------------|
 | unique<>               | []                  | Array type parameter contains no duplicates                           |
 | subset_of<>            | [[val1, val2, ...]] | Every element of array type parameter is contained within argument    |
-| fixed_size<>           | [length]            | Length of array is specified length                                   |
-| size_gt<>              | [length]            | Length of array is greater than specified length                      |
-| size_lt<>              | [length]            | Length of array is less less specified length                         |
+| fixed_size<>           | [length]            | Length of array or string is specified length                         |
+| size_gt<>              | [length]            | Length of array or string is greater than specified length            |
+| size_lt<>              | [length]            | Length of array or string is less less specified length               |
+| not_empty<>            | []                  | Array or string parameter is not empty                                |
 | element_bounds<>       | [lower, upper]      | Bounds checking for every element of array type parameter (inclusive) |
 | lower_element_bounds<> | [lower]             | Lower bound for every element of array type parameter (inclusive)     |
 | upper_element_bounds<> | [upper]             | Upper bound for every element of array type parameter (inclusive)     |
@@ -200,8 +206,14 @@ Validators are C++ functions defined in a header file similar to the example sho
 
 The `Result` type has a alias `OK` that is shorthand for returning a successful validation.
 It also had a function `ERROR` that uses the expressive [fmt format](https://github.com/fmtlib/fmt) for constructing a human readable error.
+These come from the `parameter_traits` library.
+Note that you need to place your custom validators in the `parameter_traits` namespace.
 
 ```c++
+#include <parameter_traits/parameter_traits.hpp>
+
+namespace parameter_traits {
+
 Result integer_equal_value(rclcpp::Parameter const& parameter, int expected_value) {
   int param_value = parameter.as_int();
     if (param_value != expected_value) {
@@ -211,6 +223,8 @@ Result integer_equal_value(rclcpp::Parameter const& parameter, int expected_valu
 
   return OK;
 }
+
+}  // namespace parameter_traits
 ```
 To configure a parameter to be validated with the custom validator function `integer_equal_value` with an `expected_value` of `3` you could would this to the YAML.
 ```yaml
@@ -263,7 +277,7 @@ See [example project](example/) for a complete example of how to use the generat
 The generated code is primarily consists of two major components:
 1) `struct Params` that contains values of all parameters and
 2) `class ParamListener` that handles parameter declaration, updating, and validation.
-The general structure is shown below.
+   The general structure is shown below.
 
 ```cpp
 namespace cpp_namespace {
