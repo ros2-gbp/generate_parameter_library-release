@@ -39,8 +39,18 @@ class MinimalPublisher : public rclcpp::Node {
     param_listener = std::make_shared<admittance_controller::ParamListener>(
         get_node_parameters_interface());
     params_ = param_listener->get_params();
+
+    admittance_controller::StackParams s_params =
+        param_listener->get_stack_params();
+
     RCLCPP_INFO(this->get_logger(), "Initial control frame parameter is: '%s'",
                 params_.control.frame.id.c_str());
+    RCLCPP_INFO(this->get_logger(), "fixed string is: '%s'",
+                std::string{params_.fixed_string}.c_str());
+    const tcb::span<double> fixed_array = params_.fixed_array;
+    for (auto d : fixed_array) {
+      RCLCPP_INFO(this->get_logger(), "value: '%s'", std::to_string(d).c_str());
+    }
   }
 
  private:
@@ -50,6 +60,13 @@ class MinimalPublisher : public rclcpp::Node {
       params_ = param_listener->get_params();
       RCLCPP_INFO(this->get_logger(), "New control frame parameter is: '%s'",
                   params_.control.frame.id.c_str());
+      RCLCPP_INFO(this->get_logger(), "fixed string is: '%s'",
+                  std::string{params_.fixed_string}.c_str());
+      const tcb::span<double> fixed_array = params_.fixed_array;
+      for (auto d : fixed_array) {
+        RCLCPP_INFO(this->get_logger(), "value: '%s'",
+                    std::to_string(d).c_str());
+      }
     }
   }
 
