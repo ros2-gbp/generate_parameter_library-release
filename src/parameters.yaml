@@ -18,6 +18,12 @@ admittance_controller:
     default_value: ["joint1", "joint2", "joint3"],
     description: "specifies which joints will be used by the controller",
   }
+  dof_names: {
+    type: string_array,
+    default_value: ["x", "y", "rz"],
+    description: "specifies which joints will be used by the controller",
+  }
+
   pid:
     rate: {
       type: double,
@@ -36,6 +42,7 @@ admittance_controller:
       }
       i: {
         type: double,
+        default_value: 1.0,
         description: "integral gain term"
       }
       d: {
@@ -43,6 +50,15 @@ admittance_controller:
         default_value: 1.0,
         description: "derivative gain term"
       }
+
+  gains:
+    __map_dof_names:
+      k: {
+        type: double,
+        default_value: 2.0,
+        description: "general gain"
+      }
+
   fixed_string: {
     type: string_fixed_25,
     default_value: "string_value",
@@ -228,19 +244,19 @@ admittance_controller:
   }
   one_number: {
     type: int,
-    default: 14540,
-    readonly: true,
+    default_value: 14540,
+    read_only: true,
     validation: {
       bounds<>: [ 1024, 65535 ]
     }
   }
   three_numbers: {
     type: int_array,
-    default: [3,4,5],
-    readonly: true,
+    default_value: [3,4,5],
+    read_only: true,
   }
   three_numbers_of_five: {
     type: int_array_fixed_5,
-    default: [3,3,3],
-    readonly: true,
+    default_value: [3,3,3],
+    read_only: true,
   }
