@@ -112,8 +112,8 @@ def get_dynamic_parameter_field(yaml_parameter_name: str):
 
 def get_dynamic_mapped_parameter(yaml_parameter_name: str):
     tmp = yaml_parameter_name.split(".")
-    tmp2 = tmp[-2].split("_")
-    mapped_param = tmp2[-1]
+    tmp2 = tmp[-2]
+    mapped_param = tmp2.replace("__map_", "")
     return mapped_param
 
 
@@ -445,7 +445,7 @@ class DeclareStruct:
 
         if is_mapped_parameter(self.struct_name):
             map_val_type = pascal_case(self.struct_name)
-            map_name = self.struct_name.split("_")[-1] + "_map"
+            map_name = self.struct_name.replace("__map_", "") + "_map"
             map_name = map_name.replace(".", "_")
         else:
             map_val_type = ""
@@ -675,7 +675,7 @@ class DeclareRuntimeParameter(DeclareParameterBase):
     ):
         super().__init__(code_gen_variable, parameter_description, parameter_read_only)
         self.set_runtime_parameter = None
-        self.param_struct_instance = "params_"
+        self.param_struct_instance = "updated_params"
 
     @typechecked
     def add_set_runtime_parameter(self, set_runtime_parameter: SetRuntimeParameter):
@@ -773,6 +773,15 @@ def preprocess_inputs(name, value, nested_name_list):
         defined_type = value["type"]
     except KeyError as e:
         raise compile_error("No type defined for parameter %s" % param_name)
+
+    # check for invalid syntax
+    valid_keys = {"default_value", "description", "read_only", "validation", "type"}
+    invalid_keys = value.keys() - valid_keys
+    if len(invalid_keys) > 0:
+        raise compile_error(
+            "Invalid syntax in parameter %s. '%s' is not valid syntax"
+            % (param_name, next(iter(invalid_keys)))
+        )
 
     # optional attributes
     default_value = value.get("default_value", None)
