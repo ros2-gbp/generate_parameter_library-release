@@ -26,7 +26,7 @@ turtlesim:
       default_value: 0,
       description: "Red color value for the background, 8-bit",
       validation: {
-        bounds: [0, 255]
+        bounds<>: [0, 255]
       }
     }
     g: {
@@ -34,7 +34,7 @@ turtlesim:
       default_value: 0,
       description: "Green color value for the background, 8-bit",
       validation: {
-        bounds: [0, 255]
+        bounds<>: [0, 255]
       }
     }
     b: {
@@ -42,7 +42,7 @@ turtlesim:
       default_value: 0,
       description: "Blue color value for the background, 8-bit",
       validation: {
-        bounds: [0, 255]
+        bounds<>: [0, 255]
       }
     }
 ```
@@ -92,6 +92,33 @@ int main(int argc, char * argv[])
   return 0;
 }
 ```
+
+### Use example yaml files in tests
+When using parameter library generation it can happen that there are issues when executing tests since parameters are not defined and the library defines them as mandatory.
+To overcome this it is recommended to define example yaml files for tests and use them as follows:
+
+```
+find_package(ament_cmake_gtest REQUIRED)
+add_rostest_with_parameters_gtest(test_turtlesim_parameters test/test_turtlesim_parameters.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/test/example_turtlesim_parameters.yaml)
+target_include_directories(test_turtlesim_parameters PRIVATE include)
+target_link_libraries(test_turtlesim_parameters turtlesim_parameters)
+ament_target_dependencies(test_turtlesim_parameters rclcpp)
+```
+
+when using `gtest`, or:
+
+```
+find_package(ament_cmake_gmock REQUIRED)
+add_rostest_with_parameters_gmock(test_turtlesim_parameters test/test_turtlesim_parameters.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/test/example_turtlesim_parameters.yaml)
+target_include_directories(test_turtlesim_parameters PRIVATE include)
+target_link_libraries(test_turtlesim_parameters turtlesim_parameters)
+ament_target_dependencies(test_turtlesim_parameters rclcpp)
+```
+when using `gmock` test library.
+
+🤖 P.S. having this example yaml files will make your users very grateful because they will always have a working example of a configuration for your node.
 
 ## Detailed Documentation
 * [Cpp namespace](#cpp-namespace)
@@ -185,23 +212,38 @@ This will require this string_array to have these properties:
 * Values are only in the set `["position", "velocity", "acceleration", "effort",]`
 
 You will note that some validators have a suffix of `<>`, this tells the code generator to pass the C++ type of the parameter as a function template.
+Some of these validators work only on value types, some on string types, and others on array types.
 The built-in validator functions provided by this package are:
 
-| Function               | Arguments           | Description                                                           |
-|------------------------|---------------------|-----------------------------------------------------------------------|
-| unique<>               | []                  | Array type parameter contains no duplicates                           |
-| subset_of<>            | [[val1, val2, ...]] | Every element of array type parameter is contained within argument    |
-| fixed_size<>           | [length]            | Length of array or string is specified length                         |
-| size_gt<>              | [length]            | Length of array or string is greater than specified length            |
-| size_lt<>              | [length]            | Length of array or string is less less specified length               |
-| not_empty<>            | []                  | Array or string parameter is not empty                                |
-| element_bounds<>       | [lower, upper]      | Bounds checking for every element of array type parameter (inclusive) |
-| lower_element_bounds<> | [lower]             | Lower bound for every element of array type parameter (inclusive)     |
-| upper_element_bounds<> | [upper]             | Upper bound for every element of array type parameter (inclusive)     |
-| bounds<>               | [lower, upper]      | Bounds checking for a scalar type parameter (inclusive)               |
-| lower_bounds<>         | [lower]             | Lower bounds for a scalar type parameter (inclusive)                  |
-| upper_bounds<>         | [upper]             | Upper bounds for a scalar type parameter (inclusive)                  |
-| one_of<>               | [[val1, val2, ...]] | Scalar type parameter is one of the specified values                  |
+**Value validators**
+| Function               | Arguments           | Description                          |
+|------------------------|---------------------|--------------------------------------|
+| bounds<>               | [lower, upper]      | Bounds checking (inclusive)          |
+| lower_bounds<>         | [lower]             | Lower bounds (inclusive)             |
+| upper_bounds<>         | [upper]             | Upper bounds (inclusive)             |
+| one_of<>               | [[val1, val2, ...]] | Value is one of the specified values |
+
+**String validators**
+| Function               | Arguments           | Description                                     |
+|------------------------|---------------------|-------------------------------------------------|
+| fixed_size<>           | [length]            | Length string is specified length               |
+| size_gt<>              | [length]            | Length string is greater than specified length  |
+| size_lt<>              | [length]            | Length string is less less specified length     |
+| not_empty<>            | []                  | String parameter is not empty                   |
+| one_of<>               | [[val1, val2, ...]] | String is one of the specified values           |
+
+**Array validators**
+| Function               | Arguments           | Description                                          |
+|------------------------|---------------------|------------------------------------------------------|
+| unique<>               | []                  | Contains no duplicates                               |
+| subset_of<>            | [[val1, val2, ...]] | Every element is one of the list                     |
+| fixed_size<>           | [length]            | Number of elements is specified length               |
+| size_gt<>              | [length]            | Number of elements is greater than specified length  |
+| size_lt<>              | [length]            | Number of elements is less less specified length     |
+| not_empty<>            | []                  | Has at-least one element                             |
+| element_bounds<>       | [lower, upper]      | Bounds checking each element (inclusive)             |
+| lower_element_bounds<> | [lower]             | Lower bound for each element (inclusive)             |
+| upper_element_bounds<> | [upper]             | Upper bound for each element (inclusive)             |
 
 ### Custom validator functions
 Validators are functions that return a `Result` type and accept a `rclcpp::Parameter const&` as their first argument and any number of arguments after that can be specified in YAML.
