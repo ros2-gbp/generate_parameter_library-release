@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.16)
 project(parameter_traits)
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(fmt REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(tcb_span REQUIRED)
 
 add_library(parameter_traits INTERFACE)
 target_include_directories(parameter_traits INTERFACE
@@ -15,6 +16,7 @@ target_link_libraries(parameter_traits
   INTERFACE
     fmt::fmt
     rclcpp::rclcpp
+    tcb_span::tcb_span
 )
 
 install(DIRECTORY include/ DESTINATION include/)
