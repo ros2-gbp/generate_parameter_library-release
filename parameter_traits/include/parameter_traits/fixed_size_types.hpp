@@ -27,9 +27,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
-#include "tcb_span/span.hpp"
 
 #include <string_view>
+
+#include <tcb_span/span.hpp>
 
 namespace parameter_traits {
 
@@ -51,7 +52,6 @@ class FixedSizeArray {
 
  private:
   std::array<T, S> data_;
-  const T* data_ptr_;
   size_t len_;
 };
 
