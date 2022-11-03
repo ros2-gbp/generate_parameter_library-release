@@ -1,3 +1,30 @@
+## generate_parameter_library (rolling) - 0.2.8-1
+
+The packages in the `generate_parameter_library` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling generate_parameter_library` on `Thu, 03 Nov 2022 20:39:38 -0000`
+
+These packages were released:
+- `generate_parameter_library`
+- `generate_parameter_library_example`
+- `generate_parameter_library_py`
+- `parameter_traits`
+
+Version of package(s) in repository `generate_parameter_library`:
+
+- upstream repository: https://github.com/PickNikRobotics/generate_parameter_library.git
+- release repository: https://github.com/PickNikRobotics/generate_parameter_library-release.git
+- rosdistro version: `0.2.7-1`
+- old version: `0.2.7-1`
+- new version: `0.2.8-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.22.1`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## generate_parameter_library (humble) - 0.2.7-1
 
 The packages in the `generate_parameter_library` repository were released into the `humble` distro by running `/home/tyler/.local/bin/bloom-release --rosdistro humble --track humble generate_parameter_library` on `Fri, 28 Oct 2022 17:23:21 -0000`
