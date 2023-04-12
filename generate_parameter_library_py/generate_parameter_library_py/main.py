@@ -197,6 +197,11 @@ def str_to_str(s: Optional[str]):
 
 
 @typechecked
+def no_code(s: Optional[str]):
+    return ""
+
+
+@typechecked
 def bool_array_to_str(values: Optional[list]):
     if values is None:
         return ""
@@ -264,6 +269,7 @@ def int_to_integer_str(value: str):
 
 class CodeGenVariableBase:
     defined_type_to_cpp_type = {
+        "none": lambda defined_type, templates: None,
         "bool": lambda defined_type, templates: "bool",
         "double": lambda defined_type, templates: "double",
         "int": lambda defined_type, templates: "int64_t",
@@ -278,6 +284,7 @@ class CodeGenVariableBase:
         "string_fixed": lambda defined_type, templates: f"rsl::StaticString<{templates[1]}>",
     }
     yaml_type_to_as_function = {
+        "none": None,
         "string_array": "as_string_array()",
         "double_array": "as_double_array()",
         "int_array": "as_integer_array()",
@@ -293,6 +300,7 @@ class CodeGenVariableBase:
         "string_fixed": "as_string()",
     }
     cpp_str_value_func = {
+        "none": no_code,
         "bool": bool_to_str,
         "double": float_to_str,
         "int": int_to_str,
@@ -639,10 +647,12 @@ class DeclareParameterBase:
         code_gen_variable: CodeGenVariableBase,
         parameter_description: str,
         parameter_read_only: bool,
+        parameter_validations: list,
     ):
         self.parameter_name = code_gen_variable.param_name
         self.parameter_description = parameter_description
         self.parameter_read_only = parameter_read_only
+        self.parameter_validations = parameter_validations
         self.code_gen_variable = code_gen_variable
 
 
@@ -653,14 +663,15 @@ class DeclareParameter(DeclareParameterBase):
         else:
             self.parameter_value = self.parameter_name
 
+        parameter_validations = self.parameter_validations
         data = {
             "parameter_name": self.parameter_name,
             "parameter_value": self.parameter_value,
             "parameter_type": self.code_gen_variable.get_parameter_type(),
             "parameter_description": self.parameter_description,
             "parameter_read_only": bool_to_str(self.parameter_read_only),
+            "parameter_validations": parameter_validations,
         }
-
         j2_template = Template(GenerateCode.templates["declare_parameter"])
         code = j2_template.render(data, trim_blocks=True)
         return code
@@ -672,8 +683,14 @@ class DeclareRuntimeParameter(DeclareParameterBase):
         code_gen_variable: CodeGenVariableBase,
         parameter_description: str,
         parameter_read_only: bool,
+        parameter_validations: list,
     ):
-        super().__init__(code_gen_variable, parameter_description, parameter_read_only)
+        super().__init__(
+            code_gen_variable,
+            parameter_description,
+            parameter_read_only,
+            parameter_validations,
+        )
         self.set_runtime_parameter = None
         self.param_struct_instance = "updated_params"
 
@@ -687,7 +704,6 @@ class DeclareRuntimeParameter(DeclareParameterBase):
                 "add_set_runtime_parameter was not called before str()"
             )
 
-        # parameter_validations_str = "".join(str(x) for x in self.parameter_validations)
         if self.code_gen_variable.default_value is None:
             default_value = ""
         else:
@@ -711,6 +727,7 @@ class DeclareRuntimeParameter(DeclareParameterBase):
             "param_struct_instance": self.param_struct_instance,
             "parameter_field": parameter_field,
             "default_value": default_value,
+            "parameter_validations": self.parameter_validations,
         }
 
         j2_template = Template(GenerateCode.templates["declare_runtime_parameter"])
@@ -841,6 +858,9 @@ class GenerateCode:
             read_only,
             validations,
         ) = preprocess_inputs(name, value, nested_name_list)
+        # skip accepted params that do not generate code
+        if code_gen_variable.cpp_type is None:
+            return
 
         param_name = code_gen_variable.param_name
         update_parameter_invalid = update_parameter_fail_validation()
@@ -862,13 +882,13 @@ class GenerateCode:
                 param_name, parameter_conversion
             )
             declare_parameter = DeclareRuntimeParameter(
-                code_gen_variable, description, read_only
+                code_gen_variable, description, read_only, validations
             )
             declare_parameter.add_set_runtime_parameter(declare_parameter_set)
             update_parameter = UpdateRuntimeParameter(param_name, parameter_conversion)
         else:
             declare_parameter = DeclareParameter(
-                code_gen_variable, description, read_only
+                code_gen_variable, description, read_only, validations
             )
             declare_parameter_set = SetParameter(param_name, parameter_conversion)
             update_parameter = UpdateParameter(param_name, parameter_conversion)
