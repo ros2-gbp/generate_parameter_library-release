@@ -1,13 +1,14 @@
 # generate_parameter_library
-Generate C++ for ROS 2 parameter declaration, getting, and validation using declarative YAML.
+Generate C++ or Python code for ROS 2 parameter declaration, getting, and validation using declarative YAML.
 The generated library contains a C++ struct with specified parameters.
 Additionally, dynamic parameters and custom validation are made easy.
 
 ## Killer Features
-* Declarative YAML syntax for ROS 2 Parameters converted into C++ struct
+* Declarative YAML syntax for ROS 2 Parameters converted into C++ or Python struct
 * Declaring, Getting, Validating, and Updating handled by generated code
 * Dynamic ROS 2 Parameters made easy
 * Custom user specified validator functions
+* Automatically create documentation of parameters
 
 ## Basic Usage
 1. [Create YAML parameter codegen file](#create-yaml-parameter-codegen-file)
@@ -70,6 +71,16 @@ target_link_libraries(minimal_node PRIVATE
 )
 ```
 
+**setup.py**
+```python
+from generate_parameter_library_py.setup_helper import generate_parameter_module
+
+generate_parameter_module(
+  "turtlesim_parameters", # python module name for parameter library
+  "turtlesim/turtlesim_parameters.yaml", # path to input yaml file
+)
+```
+
 ### Use generated struct into project source code
 
 **src/turtlesim.cpp**
@@ -91,6 +102,24 @@ int main(int argc, char * argv[])
 
   return 0;
 }
+```
+
+**turtlesim/turtlesim.py**
+```python
+import rclpy
+from rclpy.node import Node
+from turtlesim_pkg.turtlesim_parameters import turtlesim_parameters
+
+def main(args=None):
+  rclpy.init(args=args)
+  node = Node("turtlesim")
+  param_listener = turtlesim_parameters.ParamListener(node)
+  params = param_listener.get_params()
+
+  color = params.background
+  node.get_logger().info(
+    "Background color (r,g,b): %d, %d, %d" %
+    color.r, color.g, color.b)
 ```
 
 ### Use example yaml files in tests
@@ -130,6 +159,7 @@ when using `gmock` test library.
 * [Dynamic Parameters](#dynamic-parameters)
 * [Example Project](#example-project)
 * [Generated code output](#generated-code-output)
+* [Generate markdown documentation](#generate-markdown-documentation)
 
 ### Cpp namespace
 The root element of the YAML file determines the namespace used in the generated C++ code.
@@ -256,7 +286,7 @@ The built-in validator functions provided by this package are:
 Validators are functions that return a `tl::expected<void, std::string>` type and accept a `rclcpp::Parameter const&` as their first argument and any number of arguments after that can be specified in YAML.
 Validators are C++ functions defined in a header file similar to the example shown below.
 
-Here is an example custom allocator.
+Here is an example custom validator.
 
 ```c++
 #include <rclcpp/rclcpp.hpp>
@@ -371,7 +401,7 @@ force_torque_broadcaster_controller:
 
 
 ### Example Project
-See [example project](example/) for a complete example of how to use the generate_parameter_library.
+See [cpp example](example/) or [python example](example_python/) for complete examples of how to use the generate_parameter_library.
 
 ### Generated code output
 The generated code is primarily consists of two major components:
@@ -421,3 +451,30 @@ class ParamListener {
 } // namespace cpp_namespace
 ```
 The structure of the `Params` struct and the logic for declaring and updating parameters is generated from a YAML file specification.
+
+### Generate markdown documentation
+
+Using generate_parameter_library you can generate a Markdown-file for your `parameters.yaml` file.
+```
+generate_parameter_library_markdown --input_yaml example/src/parameters.yaml --output_markdown_file parameters.md
+```
+
+This will generate a file `parameters.md` in the current folder that contains a markdown
+representation of the `parameters.yaml` file that you can directly include into your documentation.
+
+# FAQ
+
+Q. What happens if I declare a parameter twice? Will I get an error at runtime?
+A. The declare routine that is generated checks to see if each parameter has been declared first before declaring it. Because of this you can declare a parameter twice but it will only have the properties of the first time you declared it. Here is some example generated code.
+```cpp
+if (!parameters_interface_->has_parameter(prefix_ + "scientific_notation_num")) {
+    rcl_interfaces::msg::ParameterDescriptor descriptor;
+    descriptor.description = "Test scientific notation";
+    descriptor.read_only = false;
+    auto parameter = to_parameter_value(updated_params.scientific_notation_num);
+    parameters_interface_->declare_parameter(prefix_ + "scientific_notation_num", parameter, descriptor);
+}
+```
+
+Q: How do I log when parameters change?
+A. The generated library outputs debug logs whenever a parameter is read from ROS.
