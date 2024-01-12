@@ -1,3 +1,32 @@
+## generate_parameter_library (rolling) - 0.3.7-1
+
+The packages in the `generate_parameter_library` repository were released into the `rolling` distro by running `/usr/bin/bloom-release generate_parameter_library --rosdistro rolling` on `Fri, 12 Jan 2024 18:15:18 -0000`
+
+These packages were released:
+- `cmake_generate_parameter_module_example`
+- `generate_parameter_library`
+- `generate_parameter_library_example`
+- `generate_parameter_library_py`
+- `generate_parameter_module_example`
+- `parameter_traits`
+
+Version of package(s) in repository `generate_parameter_library`:
+
+- upstream repository: https://github.com/PickNikRobotics/generate_parameter_library.git
+- release repository: https://github.com/ros2-gbp/generate_parameter_library-release.git
+- rosdistro version: `0.3.6-1`
+- old version: `0.3.6-1`
+- new version: `0.3.7-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `1.0.0`
+- rosdep version: `0.22.2`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## generate_parameter_library (iron) - 0.3.6-1
 
 The packages in the `generate_parameter_library` repository were released into the `iron` distro by running `/usr/bin/bloom-release --rosdistro iron generate_parameter_library` on `Mon, 31 Jul 2023 15:50:03 -0000`
