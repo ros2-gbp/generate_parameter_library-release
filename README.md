@@ -15,14 +15,7 @@
 
 ```
 source install/setup.bash
-ros2 run generate_parameter_library_example test_node --ros-args --params-file src/generate_parameter_library/examples/cpp/config/implementation.yaml
-
-```
-## Or run the Python node
-
-```
-source install/setup.bash
-ros2 run generate_parameter_module_example test_node --ros-args --params-file src/generate_parameter_library/examples/python/config/implementation.yaml
+ros2 run generate_parameter_library_example test_node --ros-args --params-file src/generate_parameter_library/example/config/implementation.yaml
 ```
 
 You should see an output like this:
@@ -106,7 +99,7 @@ All parameter are automatically declared and callbacks are setup by default. You
 
 You should see:
 
-`[INFO] [1656019001.515820371] [admittance_controller]: Control frame is: 'new_frame'`
+`[INFO] [1656019001.515820371] [admittance_controller]: New control frame parameter is: 'new_frame'`
 
 Congratulations, you updated the parameter!
 
@@ -139,7 +132,7 @@ If you try to set a value out of the specified bounds,
 
 you will get the error
 
-`Setting parameter failed: Invalid value '-10' for parameter 'admittance.damping_ratio'. Required bounds: [0.1, 10]`
+`Setting parameter failed: Value -10.0 in parameter 'admittance.damping_ratio' must be within bounds [0.1, 10.0]`
 
 If you try to set a vector parameter with the wrong length,
 
@@ -147,7 +140,7 @@ If you try to set a vector parameter with the wrong length,
 
 you will get the error
 
-`Setting parameter failed: Invalid length '3' for parameter 'admittance.damping_ratio'. Required equal to: 6`
+`Setting parameter failed: Length of parameter 'admittance.damping_ratio' is 3 but must be equal to 6`
 
 If you try to load a yaml file with missing required parameters
 
