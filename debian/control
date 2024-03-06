@@ -1,0 +1,12 @@
+Source: ros-rolling-cmake-generate-parameter-module-example
+Section: misc
+Priority: optional
+Maintainer: Paul Gesel <paul.gesel@picknik.ai>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake-python, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-generate-parameter-library, ros-rolling-rclpy, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-cmake-generate-parameter-module-example
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-generate-parameter-library, ros-rolling-rclpy, ros-rolling-ros-workspace
+Description: Example usage of generate_parameter_library for a python module with cmake.
