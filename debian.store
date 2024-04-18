@@ -1,1 +1,1 @@
-{"base": "03100ae7", "parent": "debian/rolling/cmake_generate_parameter_module_example", "previous": "6c15c6b7", "trim": "", "trimbase": ""}
+{"base": "56e1a59c", "parent": "debian/jazzy/cmake_generate_parameter_module_example", "previous": "6ac6406c", "trim": "", "trimbase": ""}
