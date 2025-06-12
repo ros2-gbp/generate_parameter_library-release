@@ -1,0 +1,15 @@
+ros-jazzy-generate-parameter-library-example-external (0.5.0-1noble) noble; urgency=high
+
+  * Add some new maintainers for ROS releases (#263 <https://github.com/PickNikRobotics/generate_parameter_library/issues/263>)
+  * Contributors: Nathan Brooks
+
+ -- Paul Gesel <paul.gesel@picknik.ai>  Thu, 12 Jun 2025 06:00:00 -0000
+
+ros-jazzy-generate-parameter-library-example-external (0.4.0-1noble) noble; urgency=high
+
+  * Change header install path (#213 <https://github.com/PickNikRobotics/generate_parameter_library/issues/213>)
+  * Contributors: Auguste Bourgois
+
+ -- Paul Gesel <paul.gesel@picknik.ai>  Mon, 13 Jan 2025 07:00:00 -0000
+
+
