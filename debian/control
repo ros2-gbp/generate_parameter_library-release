@@ -1,0 +1,12 @@
+Source: ros-rolling-generate-parameter-library
+Section: misc
+Priority: optional
+Maintainer: Paul Gesel <paul.gesel@picknik.ai>
+Build-Depends: debhelper (>= 9.0.0), libfmt-dev, ros-rolling-ament-cmake, ros-rolling-ament-cmake-python, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-parameter-traits, ros-rolling-rclcpp, ros-rolling-rclcpp-lifecycle, ros-rolling-rclpy, ros-rolling-rsl, ros-rolling-tcb-span, ros-rolling-tl-expected, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-generate-parameter-library
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libfmt-dev, ros-rolling-generate-parameter-library-py, ros-rolling-parameter-traits, ros-rolling-rclcpp, ros-rolling-rclcpp-lifecycle, ros-rolling-rclpy, ros-rolling-rsl, ros-rolling-tcb-span, ros-rolling-tl-expected, ros-rolling-ros-workspace
+Description: CMake to generate ROS parameter library.
