@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sys
 
 from setuptools import setup
@@ -18,7 +17,7 @@ if len(sys.argv) >= 2 and sys.argv[1] != 'clean':
 
 setup(
     name=package_name,
-    version='0.5.0',
+    version='0.6.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -30,7 +29,11 @@ setup(
     maintainer_email='paulgesel@gmail.com',
     description='Example usage of generate_parameter_library for a python module',
     license='BSD-3-Clause',
-    tests_require=['pytest'],
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
             'test_node = generate_parameter_module_example.minimal_publisher:main'
