@@ -2,13 +2,14 @@
 Changelog for package generate_parameter_library_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.8.0 (2026-03-22)
+0.7.1 (2026-03-22)
 ------------------
-* Fix nested mappings double dot bug (`#329 <https://github.com/PickNikRobotics/generate_parameter_library/issues/329>`_)
+* Fix nested mappings double dot bug and add tests (backport `#327 <https://github.com/PickNikRobotics/generate_parameter_library/issues/327>`_ `#329 <https://github.com/PickNikRobotics/generate_parameter_library/issues/329>`_) (`#331 <https://github.com/PickNikRobotics/generate_parameter_library/issues/331>`_)
+  Co-authored-by: Mat198 <44040676+Mat198@users.noreply.github.com>
   Co-authored-by: Nathan <50861188+natrad100@users.noreply.github.com>
-* Fix nested mapped parameters map (`#306 <https://github.com/PickNikRobotics/generate_parameter_library/issues/306>`_)
-* Remove unused variables in pytest (`#317 <https://github.com/PickNikRobotics/generate_parameter_library/issues/317>`_)
-* Contributors: Christoph Fröhlich, Nick Laurenson
+* Fix nested mapped parameters map (backport `#306 <https://github.com/PickNikRobotics/generate_parameter_library/issues/306>`_)
+* Remove unused variables in pytest (backport `#317 <https://github.com/PickNikRobotics/generate_parameter_library/issues/317>`_)
+* Contributors: Christoph Froehlich, Christoph Fröhlich
 
 0.7.0 (2026-02-22)
 ------------------

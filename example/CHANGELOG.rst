@@ -2,12 +2,12 @@
 Changelog for package generate_parameter_library_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.8.0 (2026-03-22)
+0.7.1 (2026-03-22)
 ------------------
-* Fix nested mapped parameters map (`#306 <https://github.com/PickNikRobotics/generate_parameter_library/issues/306>`_)
-* Use libexpected-dev instead of tl_expected (`#322 <https://github.com/PickNikRobotics/generate_parameter_library/issues/322>`_)
-* Branch for rolling, add additional CI jobs and tests (`#314 <https://github.com/PickNikRobotics/generate_parameter_library/issues/314>`_)
-* Contributors: Christoph Fröhlich, Nick Laurenson
+* Fix nested mapped parameters map (backport `#306 <https://github.com/PickNikRobotics/generate_parameter_library/issues/306>`_)
+* Fix pre-commit on humble (`#324 <https://github.com/PickNikRobotics/generate_parameter_library/issues/324>`_)
+* Branch for rolling, add additional CI jobs and tests (backport `#314 <https://github.com/PickNikRobotics/generate_parameter_library/issues/314>`_)
+* Contributors: Christoph Froehlich, Christoph Fröhlich
 
 0.7.0 (2026-02-22)
 ------------------
