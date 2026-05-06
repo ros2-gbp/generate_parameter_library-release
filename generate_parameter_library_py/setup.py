@@ -35,7 +35,7 @@ package_name = 'generate_parameter_library_py'
 
 setup(
     name=package_name,
-    version='0.7.1',
+    version='0.7.3',
     packages=find_packages(),
     data_files=[
         ('share/' + package_name, ['package.xml']),
@@ -54,6 +54,16 @@ setup(
         (
             'share/' + package_name + '/test',
             ['generate_parameter_library_py/test/invalid_parameter_type.yaml'],
+        ),
+        (
+            'share/' + package_name + '/test',
+            ['generate_parameter_library_py/test/conflicting_element_bounds.yaml'],
+        ),
+        (
+            'share/' + package_name + '/test',
+            [
+                'generate_parameter_library_py/test/conflicting_scalar_bounds_with_bounds.yaml'
+            ],
         ),
         (
             'share/' + package_name + '/test',
