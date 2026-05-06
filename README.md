@@ -91,7 +91,7 @@ generate_parameter_module(
 **src/turtlesim.cpp**
 ```c++
 #include <rclcpp/rclcpp.hpp>
-#include <turtlesim/turtlesim_parameters.hpp>  // you can also use the deprecated #include "turtlesim_parameters.hpp"
+#include <turtlesim/turtlesim_parameters.hpp>
 
 int main(int argc, char * argv[])
 {
@@ -264,6 +264,8 @@ The built-in validator functions provided by this package are:
 | gt_eq<>  | [value]             | parameter >= value                   |
 | one_of<> | [[val1, val2, ...]] | Value is one of the specified values |
 
+Note: `lt<>`, `gt<>`, `lt_eq<>`, or `gt_eq<>` cannot be used together with `bounds<>`.
+
 **String validators**
 | Function     | Arguments           | Description                                    |
 | ------------ | ------------------- | ---------------------------------------------- |
@@ -285,6 +287,8 @@ The built-in validator functions provided by this package are:
 | element_bounds<>       | [lower, upper]      | Bounds checking each element (inclusive)            |
 | lower_element_bounds<> | [lower]             | Lower bound for each element (inclusive)            |
 | upper_element_bounds<> | [upper]             | Upper bound for each element (inclusive)            |
+
+Note: `element_bounds<>` cannot be mixed with `lower_element_bounds<>` or `upper_element_bounds<>`.
 
 ### Custom validator functions
 Validators are functions that return a `tl::expected<void, std::string>` type and accept a `rclcpp::Parameter const&` as their first argument and any number of arguments after that can be specified in YAML.
@@ -513,7 +517,7 @@ force_torque_broadcaster_controller:
 
 
 ### Example Project
-See [cpp example](example/) or [python example](example_python/) for complete examples of how to use the generate_parameter_library.
+See [cpp example](https://github.com/PickNikRobotics/generate_parameter_library/tree/main/example) or [python example](https://github.com/PickNikRobotics/generate_parameter_library/tree/main/example_python) for complete examples of how to use the generate_parameter_library.
 
 ### Generated code output
 The generated code primarily consists of two major components:
