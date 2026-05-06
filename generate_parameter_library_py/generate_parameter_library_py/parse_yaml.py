@@ -98,6 +98,36 @@ def int_to_integer_str(value: str):
     return value.replace('int', 'integer')
 
 
+@typechecked
+def validation_base_name(function_name: str):
+    return function_name.replace('<>', '')
+
+
+@typechecked
+def validate_validator_combinations(param_name: str, validations_dict: dict):
+    validation_names = {validation_base_name(name) for name in validations_dict}
+
+    if 'element_bounds' in validation_names and {
+        'lower_element_bounds',
+        'upper_element_bounds',
+    }.intersection(validation_names):
+        raise compile_error(
+            "Parameter {} cannot combine 'element_bounds' with 'lower_element_bounds/upper_element_bounds'.".format(
+                param_name
+            )
+        )
+
+    scalar_bound_validators = {'gt', 'gt_eq', 'lt', 'lt_eq'}
+    if 'bounds' in validation_names and validation_names.intersection(
+        scalar_bound_validators
+    ):
+        raise compile_error(
+            "Parameter {} cannot combine 'bounds' with scalar bound validators "
+            "(gt/gt_eq/lt/lt_eq). Use only 'bounds<>' for inclusive ranges, "
+            'or only scalar bound validators.'.format(param_name)
+        )
+
+
 def get_dynamic_parameter_field(yaml_parameter_name: str):
     tmp = yaml_parameter_name.split('.')
     num_nested = [i for i, val in enumerate(tmp) if is_mapped_parameter(val)]
@@ -168,6 +198,10 @@ def is_fixed_type(yaml_type: str):
 @typechecked
 def get_fixed_base_type(yaml_type: str):
     tmp = yaml_type.split('_')
+    if len(tmp) >= 2 and tmp[-1] == 'fixed':
+        return '_'.join(tmp[:-1])
+    if len(tmp) >= 3 and tmp[-2] == 'fixed' and tmp[-1].isdigit():
+        return '_'.join(tmp[:-2])
     return '_'.join(tmp[: -(min(2, len(tmp) - 1))])
 
 
@@ -745,6 +779,8 @@ def preprocess_inputs(language, name, value, nested_name_list):
     if is_fixed_type(defined_type):
         validations_dict['size_lt<>'] = fixed_type_size(defined_type) + 1
 
+    validate_validator_combinations(param_name, validations_dict)
+
     for func_name in validations_dict:
         args = validations_dict[func_name]
         if args is not None and not isinstance(args, list):
@@ -819,8 +855,12 @@ class GenerateCode:
             validations,
             additional_constraints,
         ) = preprocess_inputs(self.language, name, value, nested_name_list)
-        # skip accepted params that do not generate code
-        if code_gen_variable.lang_type is None:
+        # Skip accepted params that do not generate code for code-generation targets.
+        # Documentation targets still need to keep these entries (e.g. type: none).
+        if code_gen_variable.lang_type is None and self.language not in {
+            'markdown',
+            'rst',
+        }:
             return
 
         param_name = code_gen_variable.param_name
