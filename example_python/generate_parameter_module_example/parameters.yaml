@@ -35,6 +35,15 @@ admittance_controller:
         validation:
           gt<>: [0.0]
 
+      limit:
+        type: double_array
+        description: "specifies limit for x, y and z axis"
+        default_value: [0.0, 0.0, 0.0]
+        validation:
+          fixed_size<>: 3
+          lower_element_bounds<>: -10.0
+          upper_element_bounds<>: 10.0
+
   nested_dynamic:
     __map_joints:
       __map_dof_names:
@@ -102,6 +111,14 @@ admittance_controller:
   fixed_string_no_default:
     type: string_fixed_25
     description: "test code generation for fixed sized string with no default"
+  fixed_string_array:
+    type: string_array_fixed_5
+    default_value: ["alpha", "beta", "gamma", "delta", "epsilon"]
+    description: "test code generation for fixed sized string array"
+  fixed_string_array_no_default:
+    type: string_array_fixed_5
+    description: "test code generation for fixed sized string array with no default"
+
   command_interfaces:
       type: string_array
       description: "specifies which command interfaces to claim"
@@ -226,6 +243,15 @@ admittance_controller:
       validation:
         element_bounds: [ 0.0001, 100000.0 ]
 
+  acceleration_limits:
+    type: double_array
+    description: "specifies maximum acceleration limits for x, y and z axis"
+    default_value: [0.0, 0.0, 0.0]
+    validation:
+      fixed_size<>: 3
+      lower_element_bounds<>: -10.0
+      upper_element_bounds<>: 10.0
+
   # general settings
   enable_parameter_update_without_reactivation:
     type: bool
@@ -247,6 +273,20 @@ admittance_controller:
     description: "should be a number greater than 15"
     validation:
       gt<>: [ 15 ]
+  gt_fifteen_lt_eq_twenty:
+    type: int
+    default_value: 20
+    description: "should be a number greater than 15 and less than or equal to 20"
+    validation:
+      gt<>: [ 15 ]
+      lt_eq<>: [ 20 ]
+  gt_fifteen_lt_twenty:
+    type: int
+    default_value: 16
+    description: "should be a number greater than 15 and less than 20"
+    validation:
+      gt<>: [ 15 ]
+      lt<>: [ 20 ]
   one_number:
     type: int
     default_value: 14540
