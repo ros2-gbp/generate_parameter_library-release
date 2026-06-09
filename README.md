@@ -1,3 +1,34 @@
+## generate_parameter_library (rolling) - 1.2.0-1
+
+The packages in the `generate_parameter_library` repository were released into the `rolling` distro by running `/usr/bin/bloom-release -r rolling generate_parameter_library` on `Tue, 09 Jun 2026 11:24:34 -0000`
+
+These packages were released:
+- `generate_parameter_library`
+- `generate_parameter_library_py`
+
+These packages were explicitly ignored:
+- `generate_parameter_library_example`
+- `cmake_generate_parameter_module_example`
+- `generate_parameter_library_example_external`
+- `generate_parameter_module_example`
+
+Version of package(s) in repository `generate_parameter_library`:
+
+- upstream repository: https://github.com/PickNikRobotics/generate_parameter_library.git
+- release repository: https://github.com/ros2-gbp/generate_parameter_library-release.git
+- rosdistro version: `1.1.0-1`
+- old version: `1.1.0-1`
+- new version: `1.2.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.14.3`
+- catkin_pkg version: `1.1.0`
+- rosdep version: `0.26.0`
+- rosdistro version: `1.0.1`
+- vcstools version: `0.1.42`
+
+
 ## generate_parameter_library (lyrical) - 1.1.0-1
 
 The packages in the `generate_parameter_library` repository were released into the `lyrical` distro by running `/usr/bin/bloom-release generate_parameter_library -r lyrical -y` on `Thu, 14 May 2026 19:51:02 -0000`
