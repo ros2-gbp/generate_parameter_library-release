@@ -100,6 +100,18 @@ admittance_controller:
         default_value: 1.0
         description: "A value in the nested map with sibling keys"
 
+  nested_map_struct_entries:
+    type: string_array
+    default_value: [A, B]
+    description: "Keys for nested map structs"
+  nested_map_struct:
+    __map_nested_map_struct_entries:
+      nested_struct:
+        nested_struct_field:
+          type: string
+          default_value: nested_struct_field
+          description: "test fields in deeply nested structs"
+
   fixed_string:
     type: string_fixed_25
     default_value: "string_value"
@@ -282,6 +294,32 @@ admittance_controller:
       lt_eq<>: [ 20 ]
   gt_fifteen_lt_twenty:
     type: int
+    default_value: 16
+    description: "should be a number greater than 15 and less than 20"
+    validation:
+      gt<>: [ 15 ]
+      lt<>: [ 20 ]
+  lt_eq_fifteen_double:
+    type: double
+    default_value: 1
+    description: "should be a number less than or equal to 15"
+    validation:
+      lt_eq<>: [ 15 ]
+  gt_fifteen_double:
+    type: double
+    default_value: 16
+    description: "should be a number greater than 15"
+    validation:
+      gt<>: [ 15 ]
+  gt_fifteen_lt_eq_twenty_double:
+    type: double
+    default_value: 20
+    description: "should be a number greater than 15 and less than or equal to 20"
+    validation:
+      gt<>: [ 15 ]
+      lt_eq<>: [ 20 ]
+  gt_fifteen_lt_twenty_double:
+    type: double
     default_value: 16
     description: "should be a number greater than 15 and less than 20"
     validation:
