@@ -42,6 +42,7 @@ from typing import Any, List, Union
 from yaml.parser import ParserError
 from yaml.scanner import ScannerError
 import os
+import sys
 import yaml
 
 from generate_parameter_library_py.cpp_conversions import CPPConversions
@@ -62,9 +63,20 @@ class YAMLSyntaxError(Exception):
 
 
 # helper functions
+_warned_param_names = set()
+
+
 @typechecked
 def compile_error(msg: str):
     return YAMLSyntaxError('\nERROR: ' + msg)
+
+
+@typechecked
+def compile_warning(param_name: str, msg: str):
+    if param_name in _warned_param_names:
+        return
+    _warned_param_names.add(param_name)
+    print('\nWARNING: ' + msg, file=sys.stderr, flush=True)
 
 
 @typechecked
@@ -111,20 +123,21 @@ def validate_validator_combinations(param_name: str, validations_dict: dict):
         'lower_element_bounds',
         'upper_element_bounds',
     }.intersection(validation_names):
-        raise compile_error(
-            "Parameter {} cannot combine 'element_bounds' with 'lower_element_bounds/upper_element_bounds'.".format(
-                param_name
-            )
+        compile_warning(
+            param_name,
+            "Parameter '{}' combines 'element_bounds' with 'lower_element_bounds/upper_element_bounds'. "
+            "'element_bounds' will take precedence.".format(param_name),
         )
 
     scalar_bound_validators = {'gt', 'gt_eq', 'lt', 'lt_eq'}
     if 'bounds' in validation_names and validation_names.intersection(
         scalar_bound_validators
     ):
-        raise compile_error(
-            "Parameter {} cannot combine 'bounds' with scalar bound validators "
+        compile_warning(
+            param_name,
+            "Parameter '{}' cannot combine 'bounds' with scalar bound validators "
             "(gt/gt_eq/lt/lt_eq). Use only 'bounds<>' for inclusive ranges, "
-            'or only scalar bound validators.'.format(param_name)
+            'or only scalar bound validators.'.format(param_name),
         )
 
 
@@ -347,24 +360,11 @@ class DeclareStruct:
         content = ''.join(str(x) for x in self.sub_structs)
         return str(content)
 
-    def python_struct_instance(name):
-        return (
-            ''
-            if is_mapped_parameter(name)
-            else f'self.{name} = self.__{pascal_case(name)}()'
-        )
-
     def __str__(self):
         sub_struct_str = ''.join(str(x) for x in self.sub_structs)
         field_str = ''.join(str(x) for x in self.fields)
         if field_str == '' and sub_struct_str == '':
             return ''
-
-        # Special case for python: Instance must be added separated to be placed in the __init__ call
-        sub_struct_python_instances = '\n'.join(
-            DeclareStruct.python_struct_instance(x.struct_name)
-            for x in self.sub_structs
-        )
 
         if is_mapped_parameter(self.struct_name):
             map_val_type = pascal_case(self.struct_name)
@@ -380,7 +380,6 @@ class DeclareStruct:
             'struct_instance': self.struct_instance,
             'struct_fields': str(field_str),
             'sub_structs': str(sub_struct_str),
-            'sub_struct_python_instances': sub_struct_python_instances,
             'map_value_type': map_val_type,
             'map_name': map_name,
         }
@@ -997,12 +996,6 @@ class GenerateCode:
             'namespace': self.namespace,
             'field_content': self.struct_tree.sub_structs[0].field_content(),
             'sub_struct_content': self.struct_tree.sub_structs[0].sub_struct_content(),
-            'sub_struct_python_instances': '\n'.join(
-                [
-                    DeclareStruct.python_struct_instance(x.struct_name)
-                    for x in self.struct_tree.sub_structs[0].sub_structs
-                ]
-            ),
             'stack_field_content': self.stack_struct_tree.sub_structs[
                 0
             ].field_content(),

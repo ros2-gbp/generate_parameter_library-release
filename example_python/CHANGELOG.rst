@@ -2,31 +2,29 @@
 Changelog for package generate_parameter_module_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2026-06-09)
+0.7.4 (2026-06-10)
 ------------------
-* add gitignore for generated files in example_python (`#356 <https://github.com/PickNikRobotics/generate_parameter_library/issues/356>`_)
-* Made fields in python structs assigned per-instance instead of at the class scope (`#351 <https://github.com/PickNikRobotics/generate_parameter_library/issues/351>`_)
-* Fix ParameterDescription of exclusive bounds (`#339 <https://github.com/PickNikRobotics/generate_parameter_library/issues/339>`_)
-* Contributors: Alex Navarro, Christoph Fröhlich, Jonas Otto
+* Fix floating_point_range numerical values (`#360 <https://github.com/PickNikRobotics/generate_parameter_library/issues/360>`_)
+* Fix ParameterDescription of exclusive bounds (backport `#339 <https://github.com/PickNikRobotics/generate_parameter_library/issues/339>`_)
+* Contributors: Christoph Froehlich, Christoph Fröhlich
 
-1.1.0 (2026-05-14)
-------------------
-
-1.0.1 (2026-05-06)
+0.7.3 (2026-05-06)
 ------------------
 
-1.0.0 (2026-04-22)
+0.7.2 (2026-04-22)
 ------------------
+* Warn on conflicting validators (`#344 <https://github.com/PickNikRobotics/generate_parameter_library/issues/344>`_)
 * Implement string_array_fixed_XX (`#341 <https://github.com/PickNikRobotics/generate_parameter_library/issues/341>`_)
-* Fix conflicting validators (`#336 <https://github.com/PickNikRobotics/generate_parameter_library/issues/336>`_)
-* Fix rst syntax parsing in parameter description (`#338 <https://github.com/PickNikRobotics/generate_parameter_library/issues/338>`_)
+* Fix rst syntax parsing in parameter description (backport `#338 <https://github.com/PickNikRobotics/generate_parameter_library/issues/338>`_)
 * Contributors: Christoph Fröhlich, Mat198
 
-0.8.0 (2026-03-22)
+0.7.1 (2026-03-22)
 ------------------
-* Testing consistency of parameters update (Python) (`#327 <https://github.com/PickNikRobotics/generate_parameter_library/issues/327>`_)
-* Fix nested mapped parameters map (`#306 <https://github.com/PickNikRobotics/generate_parameter_library/issues/306>`_)
-* Contributors: Mat198, Nick Laurenson
+* Fix nested mappings double dot bug and add tests (backport `#327 <https://github.com/PickNikRobotics/generate_parameter_library/issues/327>`_ `#329 <https://github.com/PickNikRobotics/generate_parameter_library/issues/329>`_) (`#331 <https://github.com/PickNikRobotics/generate_parameter_library/issues/331>`_)
+  Co-authored-by: Mat198 <44040676+Mat198@users.noreply.github.com>
+  Co-authored-by: Nathan <50861188+natrad100@users.noreply.github.com>
+* Fix nested mapped parameters map (backport `#306 <https://github.com/PickNikRobotics/generate_parameter_library/issues/306>`_)
+* Contributors: Christoph Froehlich, Christoph Fröhlich
 
 0.7.0 (2026-02-22)
 ------------------
