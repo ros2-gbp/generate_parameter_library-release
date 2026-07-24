@@ -2,6 +2,12 @@
 Changelog for package generate_parameter_module_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.5 (2026-07-24)
+------------------
+* Accept quotes in description and additional constraints (`#357 <https://github.com/PickNikRobotics/generate_parameter_library/issues/357>`_) (`#372 <https://github.com/PickNikRobotics/generate_parameter_library/issues/372>`_)
+* Use a shared symlinked parameter file in all examples (backport `#361 <https://github.com/PickNikRobotics/generate_parameter_library/issues/361>`_) (`#371 <https://github.com/PickNikRobotics/generate_parameter_library/issues/371>`_)
+* Contributors: mergify[bot]
+
 0.7.4 (2026-06-10)
 ------------------
 * Fix floating_point_range numerical values (`#360 <https://github.com/PickNikRobotics/generate_parameter_library/issues/360>`_)
