@@ -2,6 +2,11 @@
 Changelog for package generate_parameter_library_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.5 (2026-07-24)
+------------------
+* Accept quotes in description and additional constraints (`#357 <https://github.com/PickNikRobotics/generate_parameter_library/issues/357>`_) (`#372 <https://github.com/PickNikRobotics/generate_parameter_library/issues/372>`_)
+* Contributors: mergify[bot]
+
 0.7.4 (2026-06-10)
 ------------------
 * Fix ParameterDescription of exclusive bounds (backport `#339 <https://github.com/PickNikRobotics/generate_parameter_library/issues/339>`_)
