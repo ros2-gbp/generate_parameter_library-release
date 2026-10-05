@@ -2,28 +2,32 @@
 Changelog for package generate_parameter_library_example_external
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.7.6 (2026-08-08)
+1.3.1 (2026-10-05)
+------------------
+* fix that if no parameter is updated, the user callback is not called (`#383 <https://github.com/PickNikRobotics/generate_parameter_library/issues/383>`_)
+* Contributors: Fabian Hirmann
+
+1.3.0 (2026-07-24)
 ------------------
 
-0.7.5 (2026-07-24)
+1.2.0 (2026-06-09)
 ------------------
 
-0.7.4 (2026-06-10)
+1.1.0 (2026-05-14)
 ------------------
 
-0.7.3 (2026-05-06)
+1.0.1 (2026-05-06)
 ------------------
 
-0.7.2 (2026-04-22)
+1.0.0 (2026-04-22)
 ------------------
 * Implement string_array_fixed_XX (`#341 <https://github.com/PickNikRobotics/generate_parameter_library/issues/341>`_)
 * Contributors: Christoph Fröhlich
 
-0.7.1 (2026-03-22)
+0.8.0 (2026-03-22)
 ------------------
-* Fix pre-commit on humble (`#324 <https://github.com/PickNikRobotics/generate_parameter_library/issues/324>`_)
-* Branch for rolling, add additional CI jobs and tests (backport `#314 <https://github.com/PickNikRobotics/generate_parameter_library/issues/314>`_)
-* Contributors: Christoph Froehlich, Christoph Fröhlich
+* Branch for rolling, add additional CI jobs and tests (`#314 <https://github.com/PickNikRobotics/generate_parameter_library/issues/314>`_)
+* Contributors: Christoph Fröhlich
 
 0.7.0 (2026-02-22)
 ------------------

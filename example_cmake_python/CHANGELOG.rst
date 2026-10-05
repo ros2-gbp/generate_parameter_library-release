@@ -2,24 +2,27 @@
 Changelog for package cmake_generate_parameter_module_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.7.6 (2026-08-08)
+1.3.1 (2026-10-05)
 ------------------
 
-0.7.5 (2026-07-24)
+1.3.0 (2026-07-24)
 ------------------
-* Use a shared symlinked parameter file in all examples (backport `#361 <https://github.com/PickNikRobotics/generate_parameter_library/issues/361>`_) (`#371 <https://github.com/PickNikRobotics/generate_parameter_library/issues/371>`_)
-* Contributors: mergify[bot]
+* Use a shared symlinked parameter file in all examples (`#361 <https://github.com/PickNikRobotics/generate_parameter_library/issues/361>`_)
+* Contributors: Christoph Fröhlich
 
-0.7.4 (2026-06-10)
-------------------
-
-0.7.3 (2026-05-06)
+1.2.0 (2026-06-09)
 ------------------
 
-0.7.2 (2026-04-22)
+1.1.0 (2026-05-14)
 ------------------
 
-0.7.1 (2026-03-22)
+1.0.1 (2026-05-06)
+------------------
+
+1.0.0 (2026-04-22)
+------------------
+
+0.8.0 (2026-03-22)
 ------------------
 
 0.7.0 (2026-02-22)
