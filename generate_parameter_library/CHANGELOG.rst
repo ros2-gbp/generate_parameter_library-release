@@ -2,36 +2,33 @@
 Changelog for package generate_parameter_library
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.1 (2026-10-05)
+0.7.7 (2026-10-05)
 ------------------
 
-1.3.0 (2026-07-24)
+0.7.6 (2026-08-08)
 ------------------
-
-1.2.0 (2026-06-09)
-------------------
-
-1.1.0 (2026-05-14)
-------------------
-* Remove tl_expected (`#355 <https://github.com/PickNikRobotics/generate_parameter_library/issues/355>`_)
+* Silence CMake deprecation warning (`#375 <https://github.com/PickNikRobotics/generate_parameter_library/issues/375>`_)
 * Contributors: Christoph Fröhlich
 
-1.0.1 (2026-05-06)
+0.7.5 (2026-07-24)
 ------------------
-* Silence deprecation warning for tl_expected (`#350 <https://github.com/PickNikRobotics/generate_parameter_library/issues/350>`_)
-* Contributors: Christoph Fröhlich
 
-1.0.0 (2026-04-22)
+0.7.4 (2026-06-10)
 ------------------
-* Add repository README.md to generate_parameter_library package docs (`#296 <https://github.com/PickNikRobotics/generate_parameter_library/issues/296>`_)
-* Remove deprecated parameter_traits (`#294 <https://github.com/PickNikRobotics/generate_parameter_library/issues/294>`_) (`#330 <https://github.com/PickNikRobotics/generate_parameter_library/issues/330>`_)
-* Remove installation to deprecated include path (`#319 <https://github.com/PickNikRobotics/generate_parameter_library/issues/319>`_)
+
+0.7.3 (2026-05-06)
+------------------
+* Silence deprecation warning for tl_expected (backport `#350 <https://github.com/PickNikRobotics/generate_parameter_library/issues/350>`_)
+* Contributors: Christoph Froehlich
+
+0.7.2 (2026-04-22)
+------------------
+* Add repository README.md to generate_parameter_library package docs (backport `#296 <https://github.com/PickNikRobotics/generate_parameter_library/issues/296>`_)
+* Use libexpected-dev instead of tl_expected (`#322 <https://github.com/PickNikRobotics/generate_parameter_library/issues/322>`_) (`#333 <https://github.com/PickNikRobotics/generate_parameter_library/issues/333>`_)
 * Contributors: Christoph Fröhlich, Jonas Otto
 
-0.8.0 (2026-03-22)
+0.7.1 (2026-03-22)
 ------------------
-* Use libexpected-dev instead of tl_expected (`#322 <https://github.com/PickNikRobotics/generate_parameter_library/issues/322>`_)
-* Contributors: Christoph Fröhlich
 
 0.7.0 (2026-02-22)
 ------------------

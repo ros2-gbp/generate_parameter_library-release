@@ -1,4 +1,4 @@
-# Copyright 2022 PickNik Inc.
+# Copyright 2026 ros_controls
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -10,7 +10,7 @@
 #      notice, this list of conditions and the following disclaimer in the
 #      documentation and/or other materials provided with the distribution.
 #
-#    * Neither the name of the PickNik Inc. nor the names of its
+#    * Neither the name of the ros_controls nor the names of its
 #      contributors may be used to endorse or promote products derived from
 #      this software without specific prior written permission.
 #
@@ -26,17 +26,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-find_package(fmt REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rsl REQUIRED)
-find_package(rclcpp_lifecycle REQUIRED)
-find_package(tcb_span REQUIRED)
-find_package(tl-expected REQUIRED)
-# for backward compatibility
-# remove once this redirection is removed
-# https://github.com/PickNikRobotics/cpp_polyfills/pull/12
+# Silence deprecation output from tl_expected when this package is consumed
+# transitively through generated ament export dependency CMake files.
 set(tl_expected_DEPRECATED_QUIET TRUE)
-find_package(parameter_traits REQUIRED)
-find_package(tl_expected REQUIRED)
-
-include("${generate_parameter_library_DIR}/generate_parameter_library.cmake")
